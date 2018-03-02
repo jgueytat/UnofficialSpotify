@@ -14,12 +14,20 @@ TARGET = UnofficialSpotify
 
 CONFIG += sailfishapp
 
-SOURCES += src/UnofficialSpotify.cpp
+SOURCES += \
+    src/UnofficialSpotify.cpp \
+    src/spotifywrapper.cpp \
+    src/spotifyconnectmodel.cpp
 
-DISTFILES += qml/UnofficialSpotify.qml \
-    qml/cover/CoverPage.qml \
+HEADERS += \
+    src/spotifysecret/spotifysecret.h \
+    src/spotifywrapper.h \
+    src/spotifyconnectmodel.h
+
+DISTFILES += \
+    qml/UnofficialSpotify.qml \
     qml/pages/FirstPage.qml \
-    qml/pages/SecondPage.qml \
+    qml/pages/ConnectPage.qml \
     rpm/UnofficialSpotify.changes.in \
     rpm/UnofficialSpotify.changes.run.in \
     rpm/UnofficialSpotify.spec \
@@ -39,3 +47,18 @@ CONFIG += sailfishapp_i18n
 # modify the localized app name in the the .desktop file.
 TRANSLATIONS += translations/UnofficialSpotify-fr.ts
 
+INCLUDEPATH += $$_PRO_FILE_PWD_/src/
+DEPENDPATH += $$_PRO_FILE_PWD_/src/
+
+# Library OAUth2 coming from the QtNetworkAuth module
+qtHaveModule(networkauth):QT += network networkauth
+
+!qtHaveModule(networkauth)
+{
+    message("Using QtNetworkAuth backported from Qt 5.9.4")
+    QT += core-private network
+    INCLUDEPATH += $$_PRO_FILE_PWD_/QtNetworkAuth/
+    DEPENDPATH += $$_PRO_FILE_PWD_/QtNetworkAuth/
+    SOURCES += $$files(QtNetworkAuth/*.cpp)
+    HEADERS += $$files(QtNetworkAuth/*.h)
+}

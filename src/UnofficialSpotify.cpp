@@ -32,7 +32,13 @@
 #include <QtQuick>
 #endif
 
+// Sailfish
 #include <sailfishapp.h>
+
+// Unofficial Spotify
+#include "spotifysecret/spotifysecret.h"
+#include "spotifywrapper.h"
+#include "spotifyconnectmodel.h"
 
 
 int main(int argc, char *argv[])
@@ -47,5 +53,19 @@ int main(int argc, char *argv[])
     //
     // To display the view, call "show()" (will show fullscreen on device).
 
-    return SailfishApp::main(argc, argv);
+    QGuiApplication* app = SailfishApp::application(argc, argv);
+
+    QQuickView* view = SailfishApp::createView();
+
+    // C++ objects
+    SpotifyWrapper m_SpotifyWrapper(SPOTIFY_CLIENT_ID, SPOTIFY_CLIENT_SECRET);
+    SpotifyConnectModel m_SpotifyConnectModel(&m_SpotifyWrapper, app);
+
+    // Connect C++ to QML
+    view->rootContext()->setContextProperty("spotifyConnectModel", &m_SpotifyConnectModel);
+
+    view->setSource(QUrl(SailfishApp::pathToMainQml()));
+    view->show();
+
+    return app->exec();
 }

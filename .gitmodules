@@ -1,0 +1,3 @@
+[submodule "QtNetworkAuth"]
+	path = QtNetworkAuth
+	url = https://github.com/jgueytat/QtNetworkAuth.git
