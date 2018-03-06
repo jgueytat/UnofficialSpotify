@@ -24,10 +24,11 @@ HEADERS += \
     src/spotifywrapper.h \
     src/spotifyconnectmodel.h
 
+RESOURCES += \
+    qml/qml.qrc \
+    html/html.qrc
+
 DISTFILES += \
-    qml/UnofficialSpotify.qml \
-    qml/pages/FirstPage.qml \
-    qml/pages/ConnectPage.qml \
     rpm/UnofficialSpotify.changes.in \
     rpm/UnofficialSpotify.changes.run.in \
     rpm/UnofficialSpotify.spec \

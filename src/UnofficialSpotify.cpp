@@ -62,6 +62,7 @@ int main(int argc, char *argv[])
     SpotifyConnectModel m_SpotifyConnectModel(&m_SpotifyWrapper, app);
 
     // Connect C++ to QML
+    view->rootContext()->setContextProperty("spotifyWrapper", &m_SpotifyWrapper);
     view->rootContext()->setContextProperty("spotifyConnectModel", &m_SpotifyConnectModel);
 
     view->setSource(QUrl(SailfishApp::pathToMainQml()));
