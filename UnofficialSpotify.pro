@@ -20,7 +20,7 @@ SOURCES += \
     src/spotifyconnectmodel.cpp
 
 HEADERS += \
-    src/spotifysecret/spotifysecret.h \
+    src/clientidsecret/spotifysecret.h \
     src/spotifywrapper.h \
     src/spotifyconnectmodel.h
 

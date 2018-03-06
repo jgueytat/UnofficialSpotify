@@ -36,7 +36,7 @@
 #include <sailfishapp.h>
 
 // Unofficial Spotify
-#include "spotifysecret/spotifysecret.h"
+#include "clientidsecret/spotifysecret.h"
 #include "spotifywrapper.h"
 #include "spotifyconnectmodel.h"
 

@@ -1,5 +1,6 @@
+// Unofficial Spotify
 #include "spotifyconnectmodel.h"
-#include "spotifysecret/spotifysecret.h"
+
 
 SpotifyConnectModel::SpotifyConnectModel(SpotifyWrapper * spotifyWrapper, QObject *parent) :
     QAbstractListModel(parent),
