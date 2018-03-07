@@ -69,17 +69,14 @@ void SpotifyWrapper::tokenChangedSlot(const QString &token)
 
     Q_ASSERT(l_spotifyPlayerFileIn.open(QIODevice::ReadOnly|QIODevice::Text));
     QByteArray l_spotifyPlayerContent = l_spotifyPlayerFileIn.readAll();
+    l_spotifyPlayerFileIn.close();
+
     l_spotifyPlayerContent.replace(QString("TOKEN"), token.toLatin1());
 
     QFile l_spotifyPlayerFile(m_spotifyPlayerFilePath);
-    qDebug() << "Spotify Player url : " << m_spotifyPlayerFilePath;
-    qDebug() << "New OAuth token : " << m_token;
-
-    Q_ASSERT(l_spotifyPlayerFile.open(QIODevice::WriteOnly));
+    Q_ASSERT(l_spotifyPlayerFile.open(QIODevice::WriteOnly|QIODevice::Text));
     l_spotifyPlayerFile.write(l_spotifyPlayerContent);
-
     l_spotifyPlayerFile.close();
-    l_spotifyPlayerFileIn.close();
 
     emit tokenChanged(m_token);
 }
