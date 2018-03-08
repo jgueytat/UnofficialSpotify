@@ -4,6 +4,6 @@
     </qresource>
     <qresource prefix="/pages">
         <file>pages/ConnectPage.qml</file>
-        <file>pages/FirstPage.qml</file>
+        <file>pages/WebPlayerPage.qml</file>
     </qresource>
 </RCC>

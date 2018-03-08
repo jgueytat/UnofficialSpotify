@@ -23,5 +23,9 @@ Page {
             }
         }
         VerticalScrollDecorator {}
+        Connections {
+            target: spotifyConnectModel
+            onError: console.log(error)
+        }
     }
 }

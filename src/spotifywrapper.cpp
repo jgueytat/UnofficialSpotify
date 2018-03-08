@@ -20,7 +20,9 @@ SpotifyWrapper::SpotifyWrapper(const QString &clientIdentifier, const QString &c
     oauth2.setReplyHandler(replyHandler);
     oauth2.setAuthorizationUrl(QUrl("https://accounts.spotify.com/authorize"));
     oauth2.setAccessTokenUrl(QUrl("https://accounts.spotify.com/api/token"));
-    oauth2.setScope("user-read-playback-state");
+    // Connect scope: "user-read-playback-state"
+    // Web Playback scope: "streaming", "user-read-birthdate", "user-read-email", "user-read-private"
+    oauth2.setScope("user-read-playback-state streaming user-read-birthdate user-read-email user-read-private");
 
     connect(&oauth2, &QOAuth2AuthorizationCodeFlow::statusChanged, [=](
             QAbstractOAuth::Status status) {

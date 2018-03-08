@@ -9,7 +9,13 @@ Page {
         id: webView
         anchors.fill: parent
         url: spotifyWrapper.spotifyPlayer
-        experimental.preferences.developerExtrasEnabled: true
+        
+	experimental.preferences.developerExtrasEnabled: true
+        experimental.preferences.navigatorQtObjectEnabled: true
+
+        experimental.onMessageReceived: {
+            console.debug("Message received from javascript :", JSON.stringify(message))
+        }
 
         Connections {
             target: spotifyWrapper

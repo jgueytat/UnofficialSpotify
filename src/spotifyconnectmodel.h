@@ -23,6 +23,9 @@ public:
     int rowCount(const QModelIndex &parent) const;
     QVariant data(const QModelIndex &index, int role) const;
 
+signals:
+    void error(const QString &errorString);
+
 protected:
     QHash<int, QByteArray> roleNames() const;
 

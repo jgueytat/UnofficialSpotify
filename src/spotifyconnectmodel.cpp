@@ -74,16 +74,22 @@ QVariant SpotifyConnectModel::data(const QModelIndex &index, int role) const
 
 void SpotifyConnectModel::requestConnect()
 {
+    qDebug() << "[SpotifyConnectModel::requestConnect] : Request launched";
     auto reply = m_pSpotifyWrapper->requestConnect();
 
     connect(reply, &QNetworkReply::finished, [=]() {
+        qDebug() << "[SpotifyConnectModel::requestConnect] : Reply received";
+
         reply->deleteLater();
         if (reply->error() != QNetworkReply::NoError) {
-            // emit error(reply->errorString());
+            emit error(reply->errorString());
             return;
         }
         const auto json = reply->readAll();
         const auto document = QJsonDocument::fromJson(json);
+
+        qDebug() << "[SpotifyConnectModel::requestConnect] : Content received";
+        qDebug() << document;
 
         Q_ASSERT(document.isObject());
         const auto rootObject = document.object();
@@ -92,14 +98,17 @@ void SpotifyConnectModel::requestConnect()
         Q_ASSERT(rootObject["devices"].isArray());
         QJsonArray l_devices = rootObject["devices"].toArray();
 
-        if (l_devices.isEmpty())
+        if (l_devices.isEmpty()) {
+            emit error(QString("No decive detected"));
             return;
+        }
 
-        beginInsertRows(QModelIndex(), 0, m_aConnect.size() - 1);
+        beginResetModel();
+        m_aConnect.clear();
         for (const QJsonValue& l_device : l_devices) {
             Q_ASSERT(l_device.isObject());
             m_aConnect.append(l_device.toObject());
         }
-        endInsertRows();
+        endResetModel();
     });
 }
