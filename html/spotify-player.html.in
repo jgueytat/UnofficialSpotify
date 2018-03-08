@@ -7,31 +7,30 @@
   <h1>Spotify Web Playback SDK Quick Start Tutorial</h1>
   <h2>Open your console log: <code>View > Developer > JavaScript Console</code></h2>
 
-  <script>
-    navigator.qt.postMessage('First JS line before spotify-player.js');
-  </script>
   <script src="https://sdk.scdn.co/spotify-player.js"></script>
   <script>
-    navigator.qt.postMessage('First JS line after spotify-player.js');
     window.onSpotifyWebPlaybackSDKReady = () => {
       const token = 'TOKEN';
+      navigator.qt.postMessage(token);
+
       const player = new Spotify.Player({
         name: 'Web Playback SDK Quick Start Player',
         getOAuthToken: cb => { cb(token); }
       });
 
       // Error handling
-      player.addListener('initialization_error', ({ message }) => { navigator.qt.postMessage(message); console.error(message); });
-      player.addListener('authentication_error', ({ message }) => { navigator.qt.postMessage(message); console.error(message); });
-      player.addListener('account_error', ({ message }) => { navigator.qt.postMessage(message); console.error(message); });
-      player.addListener('playback_error', ({ message }) => { navigator.qt.postMessage(message); console.error(message); });
+      player.addListener('initialization_error', ({ message }) => { console.error(message); navigator.qt.postMessage(message); });
+      player.addListener('authentication_error', ({ message }) => { console.error(message); navigator.qt.postMessage(message); });
+      player.addListener('account_error', ({ message }) => { console.error(message); navigator.qt.postMessage(message); });
+      player.addListener('playback_error', ({ message }) => { console.error(message); navigator.qt.postMessage(message); });
 
       // Playback status updates
-      player.addListener('player_state_changed', state => { navigator.qt.postMessage(message); console.log(state); });
+      player.addListener('player_state_changed', state => { console.log(state); navigator.qt.postMessage(state); });
 
       // Ready
       player.addListener('ready', ({ device_id }) => {
-        navigator.qt.postMessage(message); console.log('Ready with Device ID', device_id);
+        console.log('Ready with Device ID', device_id);
+        navigator.qt.postMessage('Ready with Device ID', device_id);
       });
 
       // Connect to the player!

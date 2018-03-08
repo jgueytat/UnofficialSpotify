@@ -8,9 +8,8 @@ Page {
     SilicaWebView {
         id: webView
         anchors.fill: parent
-        url: spotifyWrapper.spotifyPlayer
-        
-	experimental.preferences.developerExtrasEnabled: true
+
+        experimental.preferences.developerExtrasEnabled: true
         experimental.preferences.navigatorQtObjectEnabled: true
 
         experimental.onMessageReceived: {
@@ -19,7 +18,10 @@ Page {
 
         Connections {
             target: spotifyWrapper
-            onTokenChanged: webView.reload()
+            onTokenChanged:  {
+                webView.url = spotifyWrapper.spotifyPlayer;
+                webView.reload();
+            }
         }
     }
 }
